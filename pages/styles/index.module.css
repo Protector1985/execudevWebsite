@@ -1,0 +1,25 @@
+.wrapper {
+  width: 100vw;
+  min-height: 100vh;
+  display:flex;
+  justify-content: center;
+  margin-left:-7px;
+}
+
+.subWrapper {
+  width: 90%;
+  height: 90vh;
+  margin-top: 30px;
+  overflow-y: scroll;
+}
+
+.postWrapper {
+  display:flex;
+  justify-content: space-around;
+  margin-top: 30px;
+}
+
+.posts {
+  display:flex;
+  flex-direction:column;
+}

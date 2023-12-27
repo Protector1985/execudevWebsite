@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+html {
+    background-image: linear-gradient(rgba(0, 13, 33, .88), rgba(0, 13, 33, .88)), url("../src/assets/noise.gif");
+    background-position: 0 0, 0 0;
+    background-size: auto, auto;
+    position: fixed;
+    top: 0%;
+    bottom: auto;
+    left: 0%;
+    right: auto;
+    font-family: 'Inter', sans-serif;
+}
