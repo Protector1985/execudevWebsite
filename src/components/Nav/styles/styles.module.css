@@ -13,12 +13,27 @@
     font-weight: 500;
 }
 
-
-
 .hamburgerMenu {
     width:50px;
     height: 50px;
-    margin-right:20px
+    margin-right:20px;
+    color: white;
+}
+
+.dropdownButton {
+    background-color: transparent;
+    border:none;
+}
+
+.mobileMenuBackground {
+    display:flex !important;
+    justify-content: column !important;
+}
+
+.dropdownIcon {
+    text-decoration:none!important;
+    color: white!important;
+
 }
 
 @media (max-width:768px) {
