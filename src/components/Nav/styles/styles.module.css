@@ -20,20 +20,45 @@
     color: white;
 }
 
-.dropdownButton {
-    background-color: transparent;
-    border:none;
+.slideInClosed {
+    display:flex;
+    justify-content: center;
+    
+    background-color: #101828;
+    width: 70vw;
+    height: 100vh;
+    position: absolute;
+    left: -70vw; 
+    top: 0;
+    transition: left 0.3s ease; 
+  }
+  
+  .slideIn{
+    display:flex;
+    justify-content: center;
+    
+    background-color: #101828;
+    width: 70vw;
+    height: 100vh;
+    position: absolute;
+    left: 0vw; 
+    top: 0;
+    transition: left 0.3s ease; 
+  }
+
+.menuItemMobile {
+    color: white;
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: 1.9px;
+    margin-bottom:30px;
 }
 
-.mobileMenuBackground {
-    display:flex !important;
-    justify-content: column !important;
-}
-
-.dropdownIcon {
-    text-decoration:none!important;
-    color: white!important;
-
+.menuMobileSub {
+    margin-top: 100px;
+    width: 80%;
+    display:flex;
+    flex-direction:column;
 }
 
 @media (max-width:768px) {
