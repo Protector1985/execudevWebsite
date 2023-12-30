@@ -26,10 +26,10 @@ export const GET_ONE_POST = gql`
         }
       }
       featuredImage {
-            node {
-              sourceUrl
-            }
-          }
+        node {
+          sourceUrl
+        }
+      }
       comments {
         edges {
           node {

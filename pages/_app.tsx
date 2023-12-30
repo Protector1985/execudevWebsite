@@ -4,9 +4,9 @@ import "./styles.css";
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     //header
-  
-      <Component {...pageProps} />
-   
+
+    <Component {...pageProps} />
+
     //footer
   );
 }
