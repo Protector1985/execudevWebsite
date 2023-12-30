@@ -19,10 +19,19 @@ const Post: React.FC<any> = (props: any) => {
     <div className={css.wrapper}>
       <div className={css.subWrapper}>
         <NavBar />
+     
+      <div className={css.imgContainer}>
+      <img
+            className={css.imageBlur}
+            src={props.post.featuredImage.node.sourceUrl}
+          />
         <img
-          className={css.image}
-          src={props.post.featuredImage.node.sourceUrl}
-        />
+            className={css.image}
+            src={props.post.featuredImage.node.sourceUrl}
+          />
+
+      </div>
+       
 
         <div
           style={

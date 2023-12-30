@@ -22,11 +22,33 @@
 }
 
 .image {
+  width:98%;
+  height: 92%;
+  object-fit: cover;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2; /* Higher z-index to be on top */
+}
+.imageBlur{
+  width: 98%; /* Slightly larger than the focused image */
+  height: 92%; /* Slightly larger than the focused image */
+  object-fit: cover;
+  position: absolute;
+  filter: blur(10px); /* Apply blur */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1; /* Lower z-index to sit behind the focused image */
+}
+
+.imgContainer {
+  margin-top:30px;
+  height:350px;
   width: 100%;
-  margin-top: -50px;
-  margin-bottom: -10%;
-  object-fit: contain;
-  clip-path: inset(15% 0 15% 0);
+  position:relative;
+  overflow:hidden;
 }
 
 .headlineContainer {
