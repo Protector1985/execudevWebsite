@@ -12,23 +12,4 @@ html {
     font-family: 'Inter', sans-serif !important;
 }
 
-.dropdown-menu {
-    background-color: black;
-    display:flex;
-    flex-direction:column;
-    width:100vw;
-    transform: translate3d(0px, 0px, 0px) !important;
-    color:white;
-    text-decoration: none;
-}
 
-.dropdown-item {
-    color: white;
-    text-decoration:none;
-    font-family: 'Inter', sans-serif !important;
-    font-weight: 600;
-    font-size: 20px;
-    margin-bottom:10px;
-    margin-top:10px;
-    margin-left: 30px;
-}

@@ -59,7 +59,23 @@ const Home:React.FC<HomePosts> =({ posts }) => {
     groupPosts();
   }, [posts, width]);
 
-  console.log(groupedPosts)
+  function addEmptyPost(row:Array<any>) {
+    if(row.length === 1)  {
+      return (
+        <>
+          <div className={css.emptyPost}></div>
+          <div className={css.emptyPost}></div>
+        </>
+      )
+    } else if (row.length === 2) {
+      return (
+        <>
+          <div className={css.emptyPost}></div>
+        </>
+        )
+    }
+  }
+
     return (
         <div className={css.wrapper}>
           <div className={css.subWrapper}>
@@ -69,8 +85,9 @@ const Home:React.FC<HomePosts> =({ posts }) => {
               return(
                 <div className={css.postWrapper}>
                   {row.map((post:any)=> {
-                    return <PostPreview />
+                    return <PostPreview image={post.node.featuredImage.node.sourceUrl} title={post.node.title} excerpt={post.node.excerpt} />
                   })}
+                  {addEmptyPost(row)}
                 </div>
               ) 
             } )}

@@ -19,6 +19,17 @@ export const GET_ONE_POST = gql`
       id
       content
       title
+      date
+      author {
+        node {
+          name
+        }
+      }
+      featuredImage {
+            node {
+              sourceUrl
+            }
+          }
       comments {
         edges {
           node {
