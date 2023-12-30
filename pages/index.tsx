@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import css from './styles/index.module.css'
+import css from "./styles/index.module.css";
 import apolloClient from "@/graphql/lib/client";
 import {
   GET_ALL_SLUGS,
@@ -10,9 +10,6 @@ import NavBar from "@/components/Nav/NavBar";
 import PostPreview from "@/components/PostPreview/PostPreview";
 import useWidth from "@/hooks/useWidth";
 
-
-
-
 interface Post {
   __typename: string;
   node: {};
@@ -22,7 +19,7 @@ interface HomePosts {
   posts: Array<Post>;
 }
 
-const Home:React.FC<HomePosts> =({ posts }) => {
+const Home: React.FC<HomePosts> = ({ posts }) => {
   const width = useWidth();
 
   // State to store grouped posts
@@ -38,7 +35,7 @@ const Home:React.FC<HomePosts> =({ posts }) => {
   useEffect(() => {
     const groupPosts = () => {
       let groupSize;
-      if(width !== null)
+      if (width !== null)
         if (width < breakpoints.sm) {
           groupSize = 1; // sm
         } else if (width >= breakpoints.sm && width < breakpoints.xl) {
@@ -48,10 +45,10 @@ const Home:React.FC<HomePosts> =({ posts }) => {
         }
 
       const tempGroupedPosts = [];
-      if(typeof groupSize !== 'undefined')
-      for (let i = 0; i < posts.length; i += groupSize) {
-        tempGroupedPosts.push(posts.slice(i, i + groupSize));
-      }
+      if (typeof groupSize !== "undefined")
+        for (let i = 0; i < posts.length; i += groupSize) {
+          tempGroupedPosts.push(posts.slice(i, i + groupSize));
+        }
 
       setGroupedPosts(tempGroupedPosts);
     };
@@ -59,34 +56,49 @@ const Home:React.FC<HomePosts> =({ posts }) => {
     groupPosts();
   }, [posts, width]);
 
-  console.log(groupedPosts)
-    return (
-        <div className={css.wrapper}>
-          <div className={css.subWrapper}>
-            <NavBar />
-            <div className={css.posts}>
-            {groupedPosts.map((row:any) => {
-              return(
-                <div className={css.postWrapper}>
-                  {row.map((post:any)=> {
-                    return <PostPreview />
-                  })}
-                </div>
-              ) 
-            } )}
-            
-              
+  function addEmptyPost(row: Array<any>) {
+    if (row.length === 1) {
+      return (
+        <>
+          <div className={css.emptyPost}></div>
+          <div className={css.emptyPost}></div>
+        </>
+      );
+    } else if (row.length === 2) {
+      return (
+        <>
+          <div className={css.emptyPost}></div>
+        </>
+      );
+    }
+  }
 
-              
-
-            </div>
-            
-            
-          </div>
-            
+  return (
+    <div className={css.wrapper}>
+      <div className={css.subWrapper}>
+        <NavBar />
+        <div className={css.posts}>
+          {groupedPosts.map((row: any) => {
+            return (
+              <div className={css.postWrapper}>
+                {row.map((post: any) => {
+                  return (
+                    <PostPreview
+                      image={post.node.featuredImage.node.sourceUrl}
+                      title={post.node.title}
+                      excerpt={post.node.excerpt}
+                    />
+                  );
+                })}
+                {addEmptyPost(row)}
+              </div>
+            );
+          })}
         </div>
-    );
-}
+      </div>
+    </div>
+  );
+};
 
 export async function getStaticProps() {
   const data = await apolloClient.query({
@@ -99,4 +111,4 @@ export async function getStaticProps() {
   };
 }
 
-export default Home
+export default Home;

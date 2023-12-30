@@ -1,9 +1,9 @@
 .wrapper {
   width: 100vw;
   min-height: 100vh;
-  display:flex;
+  display: flex;
   justify-content: center;
-  margin-left:-7px;
+  margin-left: -7px;
 }
 
 .subWrapper {
@@ -14,12 +14,18 @@
 }
 
 .postWrapper {
-  display:flex;
+  display: flex;
   justify-content: space-around;
   margin-top: 30px;
 }
 
+.emptyPost {
+  min-width: 380px;
+  width: 400px;
+  background-color: transparent;
+}
+
 .posts {
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
 }

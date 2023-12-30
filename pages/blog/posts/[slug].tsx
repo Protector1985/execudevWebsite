@@ -1,16 +1,25 @@
 import React from "react";
 import apolloClient from "@/graphql/lib/client";
 import { GET_ALL_SLUGS, GET_ONE_POST } from "@/graphql/queries/posts";
-
+import NavBar from "@/components/Nav/NavBar";
+import css from "./styles/styles.module.css";
 export default function Test(props: any) {
-  console.log(props.content);
-
+  console.log(props.post.featuredImage.sourceUrl);
   function createMarkup(htmlContent: string) {
     return { __html: htmlContent };
   }
   return (
-    <div>
-      <div dangerouslySetInnerHTML={createMarkup(props?.post?.content)} />
+    <div className={css.wrapper}>
+      <div className={css.subWrapper}>
+        <NavBar />
+
+        <img
+          className={css.image}
+          src={props.post.featuredImage.node.sourceUrl}
+        />
+
+        <div dangerouslySetInnerHTML={createMarkup(props?.post?.content)} />
+      </div>
     </div>
   );
 }
