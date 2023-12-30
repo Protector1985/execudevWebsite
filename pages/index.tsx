@@ -82,8 +82,10 @@ const Home: React.FC<HomePosts> = ({ posts }) => {
             return (
               <div className={css.postWrapper}>
                 {row.map((post: any) => {
+                  console.log(post);
                   return (
                     <PostPreview
+                      slug={post.node.slug}
                       image={post.node.featuredImage.node.sourceUrl}
                       title={post.node.title}
                       excerpt={post.node.excerpt}

@@ -4,6 +4,10 @@
   background-color: transparent;
 }
 
+.Link {
+  text-decoration: none;
+}
+
 .featureImage {
   object-fit: contain;
   width: 100%;
