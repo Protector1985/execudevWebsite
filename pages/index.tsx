@@ -118,11 +118,11 @@ const Home: React.FC<HomePosts> = ({ posts }) => {
                 {row.map((post: any) => {
                   return (
                     <PostPreview
-                      key={post.node.slug}
-                      slug={post.node.slug}
-                      image={post.node.featuredImage.node.sourceUrl}
-                      title={post.node.title}
-                      excerpt={post.node.excerpt}
+                      key={post?.node?.slug}
+                      slug={post?.node?.slug}
+                      image={post?.node?.featuredImage?.node?.sourceUrl}
+                      title={post?.node?.title}
+                      excerpt={post?.node?.excerpt}
                     />
                   );
                 })}

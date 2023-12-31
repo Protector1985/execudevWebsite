@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import apolloClient from "@/graphql/lib/client";
 import { GET_ALL_SLUGS, GET_ONE_POST } from "@/graphql/queries/posts";
 import NavBar from "@/components/Nav/NavBar";
@@ -9,12 +9,23 @@ import useWidth from "@/hooks/useWidth";
 import Image from "next/image";
 
 const Post: React.FC<any> = (props: any) => {
+  const [stats, setStats] = useState({minutes:0});
   const width = useWidth();
   function createMarkup(htmlContent: string) {
     return { __html: htmlContent };
   }
-  console.log(createMarkup(props?.post?.content).__html);
-  const stats = readingTime(props?.post?.content);
+  
+
+  useEffect(() => {
+
+    if(props?.post?.content) {
+      const s = readingTime(props?.post?.content);
+      setStats(s)
+    }
+
+  },[props])
+  
+  
 
   return (
     <div className={css.wrapper}>
@@ -24,11 +35,11 @@ const Post: React.FC<any> = (props: any) => {
       <div className={css.imgContainer}>
       <img alt={"tst"}
             className={css.imageBlur}
-            src={props.post.featuredImage.node.sourceUrl}
+            src={props?.post?.featuredImage?.node.sourceUrl}
           />
         <img alt={"tst"}
             className={css.image}
-            src={props.post.featuredImage.node.sourceUrl}
+            src={props?.post?.featuredImage?.node.sourceUrl}
           />
 
       </div>
@@ -43,7 +54,7 @@ const Post: React.FC<any> = (props: any) => {
           className={css.headlineContainer}
         >
           <div className={css.headline}>
-            <p className={css.mainHeadline}>{props.post.title}</p>
+            <p className={css.mainHeadline}>{props?.post?.title}</p>
           </div>
 
           <div
@@ -64,14 +75,14 @@ const Post: React.FC<any> = (props: any) => {
             <div className={css.date}>
               <p className={css.headlineContainerSubHeadline}>Date</p>
               <p className={css.headlineContainerSubData}>
-                {moment(props.post.date).format("MMM YYYY")}
+                {moment(props?.post?.date).format("MMM YYYY")}
               </p>
             </div>
 
             <div className={css.author}>
               <p className={css.headlineContainerSubHeadline}>Author</p>
               <p className={css.headlineContainerSubData}>
-                {props.post.author.node.name}
+                {props?.post?.author?.node?.name}
               </p>
             </div>
           </div>
