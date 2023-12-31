@@ -17,8 +17,8 @@
   height: 100vh;
   margin-top: 30px;
   overflow-y: scroll;
-  margin-right: 20px;
-  padding-right: 20px;
+  margin-left: 15%;
+  padding-right: 15%;
 }
 
 .image {
@@ -116,4 +116,15 @@
   width: 12%;
   margin-left: auto;
   margin-right: auto;
+}
+
+
+@media(max-width: 768px) {
+  .headline {
+    /* width:100%; */
+    font-size:21px;
+  }
+  .mainHeadline {
+    width:60vw;
+  }
 }

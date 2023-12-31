@@ -2,6 +2,7 @@ import React from "react";
 import css from "./styles/styles.module.css";
 import { FaArrowUp } from "react-icons/fa6";
 import Link from "next/link";
+import Image from "next/image";
 
 interface PostInterface {
   title: string;
@@ -19,7 +20,12 @@ const PostPreview: React.FC<PostInterface> = ({
   return (
     <Link className={css.Link} href={`/blog/posts/${slug}`}>
       <div className={css.wrapper}>
-        <img src={image} className={css.featureImage} />
+        
+        <div className={css.featureImageContainer}>
+          <img alt="tst" src={image} className={css.featureImageBlur} />
+          <img alt="tst" src={image} className={css.featureImage} />
+        </div>
+        
         <div className={css.contentContainer}>
           <h1 className={css.title}>{title}</h1>
           <FaArrowUp className={css.arrow} />

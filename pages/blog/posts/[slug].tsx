@@ -6,6 +6,7 @@ import css from "./styles/styles.module.css";
 import readingTime from "reading-time";
 import moment from "moment";
 import useWidth from "@/hooks/useWidth";
+import Image from "next/image";
 
 const Post: React.FC<any> = (props: any) => {
   const width = useWidth();
@@ -18,14 +19,14 @@ const Post: React.FC<any> = (props: any) => {
   return (
     <div className={css.wrapper}>
       <div className={css.subWrapper}>
-        <NavBar />
+        {/* <NavBar /> */}
      
       <div className={css.imgContainer}>
-      <img
+      <img alt={"tst"}
             className={css.imageBlur}
             src={props.post.featuredImage.node.sourceUrl}
           />
-        <img
+        <img alt={"tst"}
             className={css.image}
             src={props.post.featuredImage.node.sourceUrl}
           />
