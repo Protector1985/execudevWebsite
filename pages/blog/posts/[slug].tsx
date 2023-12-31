@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import apolloClient from "@/graphql/lib/client";
 import { GET_ALL_SLUGS, GET_ONE_POST } from "@/graphql/queries/posts";
 import NavBar from "@/components/Nav/NavBar";
@@ -9,12 +9,23 @@ import useWidth from "@/hooks/useWidth";
 import Image from "next/image";
 
 const Post: React.FC<any> = (props: any) => {
+  const [stats, setStats] = useState({minutes:0});
   const width = useWidth();
   function createMarkup(htmlContent: string) {
     return { __html: htmlContent };
   }
-  console.log(createMarkup(props?.post?.content).__html);
-  const stats = readingTime(props?.post?.content);
+  
+
+  useEffect(() => {
+
+    if(props.post?.content) {
+      const s = readingTime(props?.post?.content);
+      setStats(s)
+    }
+
+  },[props])
+  
+  
 
   return (
     <div className={css.wrapper}>
