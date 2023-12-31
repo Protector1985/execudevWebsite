@@ -18,7 +18,7 @@ const Post: React.FC<any> = (props: any) => {
 
   useEffect(() => {
 
-    if(props.post?.content) {
+    if(props?.post?.content) {
       const s = readingTime(props?.post?.content);
       setStats(s)
     }
@@ -75,14 +75,14 @@ const Post: React.FC<any> = (props: any) => {
             <div className={css.date}>
               <p className={css.headlineContainerSubHeadline}>Date</p>
               <p className={css.headlineContainerSubData}>
-                {moment(props.post.date).format("MMM YYYY")}
+                {moment(props?.post?.date).format("MMM YYYY")}
               </p>
             </div>
 
             <div className={css.author}>
               <p className={css.headlineContainerSubHeadline}>Author</p>
               <p className={css.headlineContainerSubData}>
-                {props.post.author.node.name}
+                {props?.post?.author?.node?.name}
               </p>
             </div>
           </div>
