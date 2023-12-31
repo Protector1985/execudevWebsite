@@ -10,6 +10,7 @@ import NavBar from "@/components/Nav/NavBar";
 import PostPreview from "@/components/PostPreview/PostPreview";
 import useWidth from "@/hooks/useWidth";
 
+
 interface Post {
   __typename: string;
   node: {};
@@ -46,7 +47,7 @@ const Home: React.FC<HomePosts> = ({ posts }) => {
 
       const tempGroupedPosts = [];
       if (typeof groupSize !== "undefined")
-        for (let i = 0; i < posts.length; i += groupSize) {
+        for (let i = 0; i < posts?.length; i += groupSize) {
           tempGroupedPosts.push(posts.slice(i, i + groupSize));
         }
 
@@ -57,33 +58,68 @@ const Home: React.FC<HomePosts> = ({ posts }) => {
   }, [posts, width]);
 
   function addEmptyPost(row: Array<any>) {
-    if (row.length === 1) {
-      return (
-        <>
-          <div className={css.emptyPost}></div>
-          <div className={css.emptyPost}></div>
-        </>
-      );
-    } else if (row.length === 2) {
-      return (
-        <>
-          <div className={css.emptyPost}></div>
-        </>
-      );
+    let groupSize;
+
+    if (width !== null)
+        if (width < breakpoints.sm) {
+          groupSize = 1; // sm
+        } else if (width >= breakpoints.sm && width < breakpoints.xl) {
+          groupSize = 2; //large
+        } else {
+          groupSize = 3; // xl
+        }
+
+    if (row?.length === 1) {
+
+      if(groupSize === 1) {
+        return
+      } else if(groupSize === 2) {
+        return <div className={css.emptyPost}></div>
+      } else if (groupSize === 3) {
+        return (
+          <>
+            <div className={css.emptyPost}></div>
+            <div className={css.emptyPost}></div>
+          </>
+        );
+      }
+
+      
+    } else if (row?.length === 2) {
+      
+      if(groupSize === 1) {
+        return
+      } else if(groupSize === 2) {
+        return 
+      } else if (groupSize === 3) {
+        return <div className={css.emptyPost}></div>
+      }
     }
   }
 
   return (
     <div className={css.wrapper}>
       <div className={css.subWrapper}>
-        <NavBar />
+        {/* <NavBar /> */}
+
+        {/* <div className={css.headBanner}>
+        
+              <div className={css.imageSub}>
+                <img className={css.image} src={'./head3.png'} />
+                <img className={css.imageBlur} src={'./head3.png'} />
+              </div>
+              
+        </div> */}
+
         <div className={css.posts}>
-          {groupedPosts.map((row: any) => {
+          {groupedPosts.map((row: any, index:any) => {
             return (
-              <div className={css.postWrapper}>
+              <div key={`Row ${index}`} className={css.postWrapper}>
                 {row.map((post: any) => {
                   return (
                     <PostPreview
+                      key={post.node.slug}
+                      slug={post.node.slug}
                       image={post.node.featuredImage.node.sourceUrl}
                       title={post.node.title}
                       excerpt={post.node.excerpt}

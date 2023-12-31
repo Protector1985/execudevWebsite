@@ -4,12 +4,32 @@
   background-color: transparent;
 }
 
-.featureImage {
-  object-fit: contain;
-  width: 100%;
-  height: auto;
-  box-shadow: inset -10px -10px 10px 20px #101828 !important;
+.Link {
+  text-decoration: none;
 }
+
+.featureImage  {
+  width:99%;
+  height: 93%;
+  object-fit: cover;
+  z-index:1
+
+}
+.featureImageBlur {
+  width: 100%; /* Slightly larger than the focused image */
+  height: 97%; /* Slightly larger than the focused image */
+  object-fit: cover;
+  position: absolute;
+  filter: blur(10px); /* Apply blur */
+  z-index:-1
+}
+
+
+.featureImageContainer {
+  width: 100%;
+  position:relative;
+}
+
 
 .featureImage:hover {
   object-fit: contain;
