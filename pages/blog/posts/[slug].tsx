@@ -54,7 +54,7 @@ const Post: React.FC<any> = (props: any) => {
           className={css.headlineContainer}
         >
           <div className={css.headline}>
-            <p className={css.mainHeadline}>{props.post.title}</p>
+            <p className={css.mainHeadline}>{props?.post?.title}</p>
           </div>
 
           <div
