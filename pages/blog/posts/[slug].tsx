@@ -35,11 +35,11 @@ const Post: React.FC<any> = (props: any) => {
       <div className={css.imgContainer}>
       <img alt={"tst"}
             className={css.imageBlur}
-            src={props.post.featuredImage.node.sourceUrl}
+            src={props?.post?.featuredImage?.node.sourceUrl}
           />
         <img alt={"tst"}
             className={css.image}
-            src={props.post.featuredImage.node.sourceUrl}
+            src={props?.post?.featuredImage?.node.sourceUrl}
           />
 
       </div>

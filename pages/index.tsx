@@ -120,7 +120,7 @@ const Home: React.FC<HomePosts> = ({ posts }) => {
                     <PostPreview
                       key={post.node.slug}
                       slug={post.node.slug}
-                      image={post.node.featuredImage.node.sourceUrl}
+                      image={post?.node?.featuredImage?.node?.sourceUrl}
                       title={post.node.title}
                       excerpt={post.node.excerpt}
                     />
