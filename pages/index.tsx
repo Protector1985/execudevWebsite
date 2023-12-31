@@ -47,7 +47,7 @@ const Home: React.FC<HomePosts> = ({ posts }) => {
 
       const tempGroupedPosts = [];
       if (typeof groupSize !== "undefined")
-        for (let i = 0; i < posts.length; i += groupSize) {
+        for (let i = 0; i < posts?.length; i += groupSize) {
           tempGroupedPosts.push(posts.slice(i, i + groupSize));
         }
 
@@ -69,7 +69,7 @@ const Home: React.FC<HomePosts> = ({ posts }) => {
           groupSize = 3; // xl
         }
 
-    if (row.length === 1) {
+    if (row?.length === 1) {
 
       if(groupSize === 1) {
         return
@@ -85,7 +85,7 @@ const Home: React.FC<HomePosts> = ({ posts }) => {
       }
 
       
-    } else if (row.length === 2) {
+    } else if (row?.length === 2) {
       
       if(groupSize === 1) {
         return
