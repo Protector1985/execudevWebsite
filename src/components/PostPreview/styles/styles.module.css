@@ -72,9 +72,23 @@
   margin-right: -10px;
 }
 
-@media (max-width: 768px) {
+@media(min-width: 500px) and (max-width: 768px) {
   .title {
     color: white;
     margin-left: 5%;
   }
+}
+
+@media(max-width: 500px) {
+  .wrapper {
+    min-width: 330px;
+    width: 330px;
+    background-color: transparent;
+  }
+
+  .title {
+    color: white;
+    margin-left: 5%;
+  }
+  
 }
