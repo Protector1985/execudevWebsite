@@ -107,6 +107,7 @@ export async function getStaticProps({ params }: any) {
     const { data } = await apolloClient.query({
       query: GET_ONE_POST,
       variables: { slug },
+      fetchPolicy: "no-cache",
     });
 
     // If data is fetched successfully, return it as props
@@ -130,6 +131,7 @@ export async function getStaticProps({ params }: any) {
 export async function getStaticPaths() {
   const data = await apolloClient.query({
     query: GET_ALL_SLUGS,
+    fetchPolicy: "network-only",
   });
 
   const paths = data.data.posts.edges.map(({ node }: any) => {
