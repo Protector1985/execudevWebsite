@@ -9,12 +9,13 @@ interface PostInterface {
   excerpt: string;
   image: string;
   slug: string;
+  altText: string;
 }
 
 const PostPreview: React.FC<PostInterface> = ({
   slug,
   title,
-  excerpt,
+  altText,
   image,
 }) => {
   return (
@@ -22,8 +23,8 @@ const PostPreview: React.FC<PostInterface> = ({
       <div className={css.wrapper}>
         
         <div className={css.featureImageContainer}>
-          <img alt="tst" src={image} className={css.featureImageBlur} />
-          <img alt="tst" src={image} className={css.featureImage} />
+          <img alt={`${altText}-blurred`} src={image} className={css.featureImageBlur} />
+          <img alt={`${altText}`} src={image} className={css.featureImage} />
         </div>
         
         <div className={css.contentContainer}>
