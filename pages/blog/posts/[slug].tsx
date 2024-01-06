@@ -7,6 +7,7 @@ import readingTime from "reading-time";
 import moment from "moment";
 import useWidth from "@/hooks/useWidth";
 import Image from "next/image";
+import Footer from "@/components/Footer/Footer";
 
 const Post: React.FC<any> = (props: any) => {
   const [stats, setStats] = useState({minutes:0});
@@ -28,6 +29,7 @@ const Post: React.FC<any> = (props: any) => {
   
 
   return (
+    <>
     <div className={css.wrapper}>
       <div className={css.subWrapper}>
         {/* <NavBar /> */}
@@ -92,8 +94,12 @@ const Post: React.FC<any> = (props: any) => {
           className={css.content}
           dangerouslySetInnerHTML={createMarkup(props?.post?.content)}
         />
+        <Footer/>
       </div>
+  
     </div>
+    
+    </>
   );
 };
 

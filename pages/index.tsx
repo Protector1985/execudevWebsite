@@ -9,6 +9,7 @@ import {
 import NavBar from "@/components/Nav/NavBar";
 import PostPreview from "@/components/PostPreview/PostPreview";
 import useWidth from "@/hooks/useWidth";
+import Footer from "@/components/Footer/Footer";
 
 
 interface Post {
@@ -131,8 +132,11 @@ const Home: React.FC<HomePosts> = ({ posts }) => {
               </div>
             );
           })}
+     
         </div>
+        
       </div>
+      <Footer />
     </div>
   );
 };
