@@ -8,11 +8,8 @@ import { useEffect } from "react";
 export default function MyApp({ Component, pageProps }: AppProps) {
   
   const router = useRouter();
-
-  const trackingId = process.env.NEXT_GOOGLE_TRACKING_ID;
-    if (typeof trackingId === 'string') {
-      ReactGA.initialize(trackingId);
-    }
+  ReactGA.initialize('G-5GJ9RMEF7Z');
+    
   
   useEffect(() => {
     // Initialize Google Analytics
