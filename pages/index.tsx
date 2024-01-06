@@ -10,6 +10,7 @@ import NavBar from "@/components/Nav/NavBar";
 import PostPreview from "@/components/PostPreview/PostPreview";
 import useWidth from "@/hooks/useWidth";
 import Footer from "@/components/Footer/Footer";
+import ReactGA from 'react-ga';
 
 
 interface Post {
@@ -22,6 +23,7 @@ interface HomePosts {
 }
 
 const Home: React.FC<HomePosts> = ({ posts }) => {
+  
   const width = useWidth();
 
   // State to store grouped posts

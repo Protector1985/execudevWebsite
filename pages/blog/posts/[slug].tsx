@@ -9,6 +9,8 @@ import useWidth from "@/hooks/useWidth";
 import Image from "next/image";
 import Footer from "@/components/Footer/Footer";
 
+
+
 const Post: React.FC<any> = (props: any) => {
   const [stats, setStats] = useState({minutes:0});
   const width = useWidth();
