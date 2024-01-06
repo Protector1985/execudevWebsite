@@ -27,6 +27,7 @@ export const GET_ONE_POST = gql`
       }
       featuredImage {
         node {
+          altText
           sourceUrl
         }
       }
@@ -55,6 +56,7 @@ export const GET_FIRST_10_POSTS = gql`
           date
           featuredImage {
             node {
+              altText
               sourceUrl
             }
           }
