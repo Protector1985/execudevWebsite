@@ -1,23 +1,20 @@
 import { AppProps } from "next/app";
 import "./styles.css";
-import Footer from "@/components/Footer/Footer";
-import ReactGA from 'react-ga';
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+
+
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   
   const router = useRouter();
-  ReactGA.initialize('G-5GJ9RMEF7Z');
-    
-  
   useEffect(() => {
-    // Initialize Google Analytics
-    
-
-    const handleRouteChange = (url:string) => {
-      ReactGA.set({ page: url });
-      ReactGA.pageview(url);
+    const handleRouteChange = (url: string) => {
+      // Tracks pageview with GA4 on route change
+      window.gtag('config', 'G-5GJ9RMEF7Z', {
+        page_path: url,
+      });
     };
 
     // Track the initial pageview
@@ -32,6 +29,23 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     };
   }, [router.events, router.asPath]);
 
-  return <Component {...pageProps} />;
+  return <>
+  <Head>
+    {/* Google tag (gtag.js) */}
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5GJ9RMEF7Z"></script>
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-5GJ9RMEF7Z');
+        `,
+      }}
+    />
+  </Head>
+  <Component {...pageProps} />
+  
+</>
 };
 
