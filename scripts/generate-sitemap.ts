@@ -48,7 +48,7 @@ async function generateSitemap(slugs: string[]) {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${slugs
     .map((slug) => `  <url>
-    <loc>${baseUrl}/post/${slug}</loc>
+    <loc>${baseUrl}/blog/post/${slug}</loc>
   </url>`)
     .join('\n')}
 </urlset>`;
