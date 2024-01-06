@@ -14,7 +14,7 @@ const Post: React.FC<any> = (props: any) => {
   function createMarkup(htmlContent: string) {
     return { __html: htmlContent };
   }
-  
+
 
   useEffect(() => {
 
@@ -33,11 +33,11 @@ const Post: React.FC<any> = (props: any) => {
         {/* <NavBar /> */}
      
       <div className={css.imgContainer}>
-      <img alt={"tst"}
+      <img alt={`${props?.post?.featuredImage?.node.altText}-blurred-background`}
             className={css.imageBlur}
             src={props?.post?.featuredImage?.node.sourceUrl}
           />
-        <img alt={"tst"}
+        <img alt={props?.post?.featuredImage?.node.altText}
             className={css.image}
             src={props?.post?.featuredImage?.node.sourceUrl}
           />
@@ -131,7 +131,7 @@ export async function getStaticProps({ params }: any) {
 export async function getStaticPaths() {
   const data = await apolloClient.query({
     query: GET_ALL_SLUGS,
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
   });
 
   const paths = data.data.posts.edges.map(({ node }: any) => {

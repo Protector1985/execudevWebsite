@@ -139,7 +139,7 @@ const Home: React.FC<HomePosts> = ({ posts }) => {
 export async function getServerSideProps() {
   const data = await apolloClient.query({
     query: GET_FIRST_10_POSTS,
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
   });
 
   return {
