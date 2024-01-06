@@ -44,18 +44,14 @@ async function fetchSlugs() {
 
 async function generateSitemap(slugs: string[]) {
   const baseUrl = 'https://execudev-inc.com'; 
-  const sitemapContent = `
-    <?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      ${slugs
-        .map((slug) => `
-          <url>
-            <loc>${baseUrl}/post/${slug}</loc>
-          </url>
-        `)
-        .join('')}
-    </urlset>
-  `;
+  const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${slugs
+    .map((slug) => `  <url>
+    <loc>${baseUrl}/post/${slug}</loc>
+  </url>`)
+    .join('\n')}
+</urlset>`;
   const sitemapPath = path.resolve(process.cwd(), 'public/sitemap.xml');
   await writeFileAsync(sitemapPath, sitemapContent);
   console.log(`Sitemap generated at ${sitemapPath}`);
