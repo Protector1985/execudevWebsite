@@ -8,26 +8,28 @@ import { useEffect } from "react";
 export default function MyApp({ Component, pageProps }: AppProps) {
   
   const router = useRouter();
-  ReactGA.initialize('G-5GJ9RMEF7Z');
   useEffect(() => {
-    // Initialize Google Analytics
-    
+    // Ensure the Google Analytics tracking ID is defined
+    const trackingId = process.env.NEXT_GOOGLE_TRACKING_ID;
+    if (typeof trackingId === 'string') {
+      ReactGA.initialize(trackingId);
 
-    const handleRouteChange = (url:string) => {
-      ReactGA.set({ page: url });
-      ReactGA.pageview(url);
-    };
+      const handleRouteChange = (url: string) => {
+        ReactGA.set({ page: url });
+        ReactGA.pageview(url);
+      };
 
-    // Track the initial pageview
-    handleRouteChange(router.asPath);
+      // Track the initial pageview
+      handleRouteChange(router.asPath);
 
-    // Add event listeners for route changes
-    router.events.on('routeChangeComplete', handleRouteChange);
+      // Add event listeners for route changes
+      router.events.on('routeChangeComplete', handleRouteChange);
 
-    // Remove event listeners on cleanup
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
-    };
+      // Remove event listeners on cleanup
+      return () => {
+        router.events.off('routeChangeComplete', handleRouteChange);
+      };
+    }
   }, [router.events, router.asPath]);
 
   return <Component {...pageProps} />;
