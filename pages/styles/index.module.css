@@ -8,10 +8,26 @@
 }
 
 .subWrapper {
-  width: 90%;
+  width: 100vw;
   height: 100vh;
   margin-top: 30px;
   overflow-y: scroll;
+}
+
+.subWrapper::-webkit-scrollbar-track {
+  background: transparent; /* Optional: the track background */
+}
+
+/* Styles for the scrollbar handle */
+.subWrapper::-webkit-scrollbar-thumb {
+  background: black; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners on the scrollbar thumb */
+}
+
+/* Styles for the scrollbar itself */
+.subWrapper::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+  height: 8px; /* Height of the scrollbar (for horizontal scroll) */
 }
 
 .postWrapper {
