@@ -34,6 +34,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
 <Script async src="https://www.googletagmanager.com/gtag/js?id=G-5GJ9RMEF7Z"></Script>
     <Script
+      id="google-analytics" 
       dangerouslySetInnerHTML={{
         __html: `
           window.dataLayer = window.dataLayer || [];
