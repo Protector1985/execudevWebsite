@@ -5,7 +5,7 @@ html {
       rgba(0, 13, 33, 0.88),
       rgba(0, 13, 33, 0.88)
     ),
-    url("../src/assets/noise.gif") !important;
+    url("/noise.gif") !important;
   background-position:
     0 0,
     0 0 !important;
