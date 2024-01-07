@@ -12,6 +12,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const handleRouteChange = (url: string) => {
       // Tracks pageview with GA4 on route change
+      console.log(url)
       window.gtag('config', 'G-5GJ9RMEF7Z', {
         page_path: url,
       });
