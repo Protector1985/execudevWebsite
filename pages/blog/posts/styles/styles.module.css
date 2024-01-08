@@ -38,11 +38,8 @@
   height: 8px; /* Height of the scrollbar (for horizontal scroll) */
 }
 
-
-
-
 .image {
-  width:98%;
+  width: 98%;
   height: 92%;
   object-fit: cover;
   position: absolute;
@@ -51,7 +48,7 @@
   transform: translate(-50%, -50%);
   z-index: 2; /* Higher z-index to be on top */
 }
-.imageBlur{
+.imageBlur {
   width: 98%; /* Slightly larger than the focused image */
   height: 92%; /* Slightly larger than the focused image */
   object-fit: cover;
@@ -64,11 +61,11 @@
 }
 
 .imgContainer {
-  margin-top:30px;
-  height:350px;
+  margin-top: 30px;
+  height: 350px;
   width: 100%;
-  position:relative;
-  overflow:hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .headlineContainer {
@@ -138,35 +135,32 @@
   margin-right: auto;
 }
 
-
 @media (min-width: 500px) and (max-width: 768px) {
   .headline {
     /* width:100%; */
-    font-size:21px;
+    font-size: 21px;
   }
   .mainHeadline {
-    width:60vw;
+    width: 60vw;
   }
 }
 
-@media(max-width: 500px) {
+@media (max-width: 500px) {
   .subWrapper {
     width: 95%;
     height: 100vh;
     margin-top: 30px;
     overflow-y: scroll;
-    margin-left:0;
-    padding-right:0;
+    margin-left: 0;
+    padding-right: 0;
   }
 
   .headline {
     width: 100%;
-    min-width:200px;
+    min-width: 200px;
     font-family: "Audiowide", sans-serif;
     font-size: 36px;
     margin-right: auto;
     letter-spacing: 1.5px;
   }
-
 }
-

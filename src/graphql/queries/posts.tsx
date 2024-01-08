@@ -31,6 +31,15 @@ export const GET_ONE_POST = gql`
           sourceUrl
         }
       }
+      seo {
+        breadcrumbs {
+          url
+          text
+        }
+        metaDesc
+        opengraphPublishedTime
+        opengraphModifiedTime
+      }
       comments {
         edges {
           node {

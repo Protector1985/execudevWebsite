@@ -10,8 +10,7 @@ import NavBar from "@/components/Nav/NavBar";
 import PostPreview from "@/components/PostPreview/PostPreview";
 import useWidth from "@/hooks/useWidth";
 import Footer from "@/components/Footer/Footer";
-import ReactGA from 'react-ga';
-
+import Head from "next/head";
 
 interface Post {
   __typename: string;
@@ -23,7 +22,6 @@ interface HomePosts {
 }
 
 const Home: React.FC<HomePosts> = ({ posts }) => {
-  
   const width = useWidth();
 
   // State to store grouped posts
@@ -64,20 +62,19 @@ const Home: React.FC<HomePosts> = ({ posts }) => {
     let groupSize;
 
     if (width !== null)
-        if (width < breakpoints.sm) {
-          groupSize = 1; // sm
-        } else if (width >= breakpoints.sm && width < breakpoints.xl) {
-          groupSize = 2; //large
-        } else {
-          groupSize = 3; // xl
-        }
+      if (width < breakpoints.sm) {
+        groupSize = 1; // sm
+      } else if (width >= breakpoints.sm && width < breakpoints.xl) {
+        groupSize = 2; //large
+      } else {
+        groupSize = 3; // xl
+      }
 
     if (row?.length === 1) {
-
-      if(groupSize === 1) {
-        return
-      } else if(groupSize === 2) {
-        return <div className={css.emptyPost}></div>
+      if (groupSize === 1) {
+        return;
+      } else if (groupSize === 2) {
+        return <div className={css.emptyPost}></div>;
       } else if (groupSize === 3) {
         return (
           <>
@@ -86,26 +83,45 @@ const Home: React.FC<HomePosts> = ({ posts }) => {
           </>
         );
       }
-
-      
     } else if (row?.length === 2) {
-      
-      if(groupSize === 1) {
-        return
-      } else if(groupSize === 2) {
-        return 
+      if (groupSize === 1) {
+        return;
+      } else if (groupSize === 2) {
+        return;
       } else if (groupSize === 3) {
-        return <div className={css.emptyPost}></div>
+        return <div className={css.emptyPost}></div>;
       }
     }
   }
 
-  return (
-    <div className={css.wrapper}>
-      <div className={css.subWrapper}>
-        {/* <NavBar /> */}
+  const pageTitle = "Execudev | Next Level Programming";
+  const pageDescription =
+    "Explore cutting-edge AI centered programming tutorials, industry insights, and development tips.";
+  const pageImage =
+    "https://execudev-83aeea.ingress-haven.ewp.live/wp-content/uploads/2024/01/DALL·E-2024-01-07-16.29.36-A-16_9-Matrix-styled-image-of-a-CPU-with-the-initials-ED-clearly-visible-on-it.-The-CPU-is-intricately-designed-displaying-detailed-circuitry-and-c.png"; // URL to an image representing the content
+  const pageUrl = "https://www.execudev-inc.com"; // The current page's URL
 
-        {/* <div className={css.headBanner}>
+  return (
+    <>
+      <Head>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charSet="UTF-8" />
+        <link rel="canonical" href={pageUrl} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:image" content={pageImage} />
+        <meta property="og:url" content={pageUrl} />
+        <meta property="og:type" content="website" />
+        <meta name="robots" content="index, follow" />
+      </Head>
+
+      <div className={css.wrapper}>
+        <div className={css.subWrapper}>
+          {/* <NavBar /> */}
+
+          {/* <div className={css.headBanner}>
         
               <div className={css.imageSub}>
                 <img className={css.image} src={'./head3.png'} />
@@ -114,32 +130,31 @@ const Home: React.FC<HomePosts> = ({ posts }) => {
               
         </div> */}
 
-        <div className={css.posts}>
-          {groupedPosts.map((row: any, index:any) => {
-            return (
-              <div key={`Row ${index}`} className={css.postWrapper}>
-                {row.map((post: any) => {
-                  return (
-                    <PostPreview
-                      key={post?.node?.slug}
-                      slug={post?.node?.slug}
-                      altText={post?.node?.featuredImage?.node?.altText}
-                      image={post?.node?.featuredImage?.node?.sourceUrl}
-                      title={post?.node?.title}
-                      excerpt={post?.node?.excerpt}
-                    />
-                  );
-                })}
-                {addEmptyPost(row)}
-              </div>
-            );
-          })}
-     
+          <div className={css.posts}>
+            {groupedPosts.map((row: any, index: any) => {
+              return (
+                <div key={`Row ${index}`} className={css.postWrapper}>
+                  {row.map((post: any) => {
+                    return (
+                      <PostPreview
+                        key={post?.node?.slug}
+                        slug={post?.node?.slug}
+                        altText={post?.node?.featuredImage?.node?.altText}
+                        image={post?.node?.featuredImage?.node?.sourceUrl}
+                        title={post?.node?.title}
+                        excerpt={post?.node?.excerpt}
+                      />
+                    );
+                  })}
+                  {addEmptyPost(row)}
+                </div>
+              );
+            })}
+          </div>
         </div>
-        
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 };
 
