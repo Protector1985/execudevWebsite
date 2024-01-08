@@ -59,7 +59,7 @@ const Post: React.FC<any> = (props: any) => {
         <meta property="og:image" content={postImageUrl} />
         <meta
           property="og:url"
-          content={`https://www.execudev-inc.com/blog/posts/${postTitle.toLowerCase().replace(/\s+/g, "-")}`}
+          content={`https://www.execudev-inc.com/blog/posts/${postTitle?.toLowerCase().replace(/\s+/g, "-")}`}
         />
         <meta property="og:type" content="article" />
         <meta property="og:published_time" content={publicationDate} />
