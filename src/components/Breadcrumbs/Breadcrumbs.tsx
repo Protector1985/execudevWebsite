@@ -10,7 +10,7 @@ interface BreadcrumbProps {
 }
 
 const Breadcrumbs: React.FC<BreadcrumbProps> = ({ slug, path }) => {
-  const formattedSlugForURL = slug.toLowerCase().replace(/\s+/g, "-");
+  const formattedSlugForURL = slug?.toLowerCase().replace(/\s+/g, "-");
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
