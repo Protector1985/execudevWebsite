@@ -36,7 +36,7 @@ const Breadcrumbs: React.FC<BreadcrumbProps> = ({ slug, path }) => {
 
     return (
         <>
-            <Script type="application/ld+json">
+            <Script id="breadcrumbs" type="application/ld+json">
                 {JSON.stringify(breadcrumbSchema)}
             </Script>
             <nav className={css.wrapper}>

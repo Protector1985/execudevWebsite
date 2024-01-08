@@ -10,7 +10,7 @@ import Image from "next/image";
 import Footer from "@/components/Footer/Footer";
 import Head from 'next/head'
 import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
-
+import Script from "next/script";
 
 
 const Post: React.FC<any> = (props: any) => {
@@ -71,7 +71,7 @@ const Post: React.FC<any> = (props: any) => {
         <meta name="twitter:title" content={postTitle} />
         <meta name="twitter:description" content={postDescription} />
         <meta name="twitter:image" content={postImageUrl} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+        <Script id="structured-data" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       </Head>
     <div className={css.wrapper}>
       
