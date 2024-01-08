@@ -21,12 +21,15 @@ const PostPreview: React.FC<PostInterface> = ({
   return (
     <Link className={css.Link} href={`/blog/posts/${slug}`}>
       <div className={css.wrapper}>
-        
         <div className={css.featureImageContainer}>
-          <img alt={`${altText}-blurred`} src={image} className={css.featureImageBlur} />
+          <img
+            alt={`${altText}-blurred`}
+            src={image}
+            className={css.featureImageBlur}
+          />
           <img alt={`${altText}`} src={image} className={css.featureImage} />
         </div>
-        
+
         <div className={css.contentContainer}>
           <h1 className={css.title}>{title}</h1>
           <FaArrowUp className={css.arrow} />
