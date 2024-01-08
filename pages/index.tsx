@@ -10,7 +10,7 @@ import NavBar from "@/components/Nav/NavBar";
 import PostPreview from "@/components/PostPreview/PostPreview";
 import useWidth from "@/hooks/useWidth";
 import Footer from "@/components/Footer/Footer";
-import ReactGA from 'react-ga';
+import Head from 'next/head'
 
 
 interface Post {
@@ -100,7 +100,28 @@ const Home: React.FC<HomePosts> = ({ posts }) => {
     }
   }
 
+  const pageTitle = 'Execudev | Next Level Programming';
+  const pageDescription = 'Explore cutting-edge AI centered programming tutorials, industry insights, and development tips.';
+  const pageImage = 'https://execudev-83aeea.ingress-haven.ewp.live/wp-content/uploads/2024/01/DALL·E-2024-01-07-16.29.36-A-16_9-Matrix-styled-image-of-a-CPU-with-the-initials-ED-clearly-visible-on-it.-The-CPU-is-intricately-designed-displaying-detailed-circuitry-and-c.png'; // URL to an image representing the content
+  const pageUrl = 'https://www.execudev-inc.com'; // The current page's URL
+
+
   return (
+    <>
+      <Head>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charSet="UTF-8" />
+        <link rel="canonical" href={pageUrl} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:image" content={pageImage} />
+        <meta property="og:url" content={pageUrl} />
+        <meta property="og:type" content="website" />
+        <meta name="robots" content="index, follow" />
+      </Head>
+   
     <div className={css.wrapper}>
       <div className={css.subWrapper}>
         {/* <NavBar /> */}
@@ -140,6 +161,7 @@ const Home: React.FC<HomePosts> = ({ posts }) => {
       </div>
       <Footer />
     </div>
+    </>
   );
 };
 

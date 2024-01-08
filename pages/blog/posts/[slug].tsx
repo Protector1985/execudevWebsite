@@ -8,6 +8,8 @@ import moment from "moment";
 import useWidth from "@/hooks/useWidth";
 import Image from "next/image";
 import Footer from "@/components/Footer/Footer";
+import Head from 'next/head'
+import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 
 
 
@@ -17,6 +19,8 @@ const Post: React.FC<any> = (props: any) => {
   function createMarkup(htmlContent: string) {
     return { __html: htmlContent };
   }
+
+  
 
 
   useEffect(() => {
@@ -28,14 +32,52 @@ const Post: React.FC<any> = (props: any) => {
 
   },[props])
   
+  const postTitle = props?.post?.title;
+  const postDescription = props?.post?.seo?.metaDesc;
+  const postImageUrl = props?.post?.featuredImage?.node.sourceUrl;
+
+  const publicationDate = moment(props?.post?.seo?.opengraphPublishedTime).format("YYYY-MM-DD")
+  const modifiedDate = moment(props?.post?.seo?.opengraphModifiedTime).format("YYYY-MM-DD")
+
+ 
+  const structuredData = {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": postTitle,
+    "image": postImageUrl,
+    "datePublished": publicationDate,
+    "author": {
+      "@type": "Person",
+      "name": props?.post?.author?.node?.name
+    },
+    // Additional properties like "publisher" can be added here
+  };
   
 
   return (
     <>
+
+<Head>
+        <title>{postTitle}</title>
+        <meta name="description" content={postDescription} />
+        <meta property="og:title" content={postTitle} />
+        <meta property="og:description" content={postDescription} />
+        <meta property="og:image" content={postImageUrl} />
+        <meta property="og:url" content={`https://www.execudev-inc.com/${props?.post?.slug}`} />
+        <meta property="og:type" content="article" />
+        <meta property="og:published_time" content={publicationDate} />
+        <meta property="og:modified_time" content={modifiedDate} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={postTitle} />
+        <meta name="twitter:description" content={postDescription} />
+        <meta name="twitter:image" content={postImageUrl} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      </Head>
     <div className={css.wrapper}>
+      
       <div className={css.subWrapper}>
         {/* <NavBar /> */}
-     
+      <Breadcrumbs slug={postTitle} path="/" />
       <div className={css.imgContainer}>
       <img alt={`${props?.post?.featuredImage?.node.altText}-blurred-background`}
             className={css.imageBlur}

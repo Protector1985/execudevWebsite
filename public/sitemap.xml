@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://execudev-inc.com/blog/posts/what-is-the-idea-of-deep-learning</loc>
+    <loc>https://www.execudev-inc.com</loc>
   </url>
   <url>
-    <loc>https://execudev-inc.com/blog/posts/what-are-transformers-in-ai</loc>
+    <loc>https://execudev-inc.com</loc>
+  </url>
+  <url>
+    <loc>http://www.execudev-inc.com</loc>
+  </url>
+  <url>
+    <loc>http://execudev-inc.com</loc>
+  </url>
+  <url>
+    <loc>https://www.execudev-inc.com/blog/posts/what-is-the-idea-of-deep-learning</loc>
+  </url>
+  <url>
+    <loc>https://www.execudev-inc.com/blog/posts/what-are-transformers-in-ai</loc>
   </url>
 </urlset>
