@@ -94,7 +94,7 @@ const Home: React.FC<HomePosts> = ({ posts }) => {
     }
   }
 
-  const pageTitle = "Execudev | Next Level Programming";
+  const pageTitle = "ExecuDev | Next Level Programming";
   const pageDescription =
     "Explore cutting-edge AI centered programming tutorials, industry insights, and development tips.";
   const pageImage =
