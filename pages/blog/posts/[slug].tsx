@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import apolloClient from "@/graphql/lib/client";
 import { GET_ALL_SLUGS, GET_ONE_POST } from "@/graphql/queries/posts";
 import NavBar from "@/components/Nav/NavBar";
@@ -6,22 +6,62 @@ import css from "./styles/styles.module.css";
 import readingTime from "reading-time";
 import moment from "moment";
 import useWidth from "@/hooks/useWidth";
-
+import ReactDOM from "react-dom";
 import Footer from "@/components/Footer/Footer";
 import Head from "next/head";
 import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
+import CodeEditor from "@/components/CodeEditor/CodeEditor";
 
 const Post: React.FC<any> = (props: any) => {
   const [stats, setStats] = useState({ minutes: 0 });
   const width = useWidth();
   function createMarkup(htmlContent: string) {
+
+    console.log(htmlContent)
     return { __html: htmlContent };
   }
+
+
+  const contentRef = useRef<HTMLDivElement>(null); // Ref to the content div
+
+  function extractAndReplaceCodeSnippets(htmlContent: string) {
+    const pythonCodeRegex = /<div>\*\*\*python_code\*\*\*\{<\/div>([\s\S]*?)<div>\}\*\*\*python_code\*\*\*<\/div>/g;
+    let index = 0;
+    const snippets:any = [];
+    let modifiedHtmlContent = htmlContent.replace(pythonCodeRegex, (_, codeSnippet) => {
+      // Remove the <div> tags
+      let cleanedCodeSnippet = codeSnippet.replace(/<\/?div>/g, '').trim();
+  
+      // Create a temporary DOM element to decode HTML entities
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = cleanedCodeSnippet;
+      cleanedCodeSnippet = tempDiv.innerText;
+  
+      const placeholder = `code-editor-placeholder-${index}`;
+      snippets.push({ code: cleanedCodeSnippet, placeholder });
+      index++;
+      return `<div id="${placeholder}"></div>`; // Placeholder for the CodeEditor component
+    });
+    return { modifiedHtmlContent, snippets };
+  }
+  
+
 
   useEffect(() => {
     if (props?.post?.content) {
       const s = readingTime(props?.post?.content);
       setStats(s);
+
+      const { modifiedHtmlContent, snippets } = extractAndReplaceCodeSnippets(props.post.content);
+      if (contentRef.current) {
+        contentRef.current.innerHTML = modifiedHtmlContent;
+        snippets.forEach((snippet:any) => {
+          const placeholderElement = document.getElementById(snippet.placeholder);
+          if (placeholderElement) {
+            ReactDOM.render(<CodeEditor codeSnippet={{ type: "python_code", code: snippet.code }} />, placeholderElement);
+          }
+        });
+      }
     }
   }, [props]);
 
@@ -135,6 +175,7 @@ const Post: React.FC<any> = (props: any) => {
           </div>
 
           <div
+            ref={contentRef}
             className={css.content}
             dangerouslySetInnerHTML={createMarkup(props?.post?.content)}
           />
