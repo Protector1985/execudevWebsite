@@ -5,9 +5,7 @@ import { promisify } from "util";
 import path from "path";
 
 // Defined URLs to be added directly to the sitemap
-const BASE_URLS = [
-  "https://www.execudev-inc.com",
-];
+const BASE_URLS = ["https://www.execudev-inc.com"];
 
 // Replace with your GraphQL endpoint
 const GRAPHQL_ENDPOINT =

@@ -10,8 +10,8 @@
 
 .content {
   color: white;
-  letter-spacing:1.2px;
-  font-size:20px;
+  letter-spacing: 1.2px;
+  font-size: 20px;
 }
 
 .subWrapper {
@@ -64,7 +64,7 @@
 
 .imgContainer {
   margin-top: 30px;
-  height: 350px;
+  height: 450px;
   width: 100%;
   position: relative;
   overflow: hidden;

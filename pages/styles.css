@@ -28,13 +28,17 @@ html {
 
 .fullWidthPicture {
   object-fit: contain;
-  width:100%;
+  width: 100%;
   height: auto;
-  margin-top:30px;
+  margin-top: 30px;
   margin-bottom: 65px;
 }
 
 .folderStructure {
-  margin-top:30px;
+  margin-top: 30px;
   margin-bottom: 65px;
+}
+
+a {
+  color: #00346e7a;
 }
