@@ -6,7 +6,7 @@ import css from "./styles/styles.module.css";
 import readingTime from "reading-time";
 import moment from "moment";
 import useWidth from "@/hooks/useWidth";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import Footer from "@/components/Footer/Footer";
 import Head from "next/head";
 import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
@@ -69,12 +69,14 @@ const Post: React.FC<any> = (props: any) => {
         snippets.forEach((snippet:any) => {
           const placeholderElement = document.getElementById(snippet.placeholder);
           if (placeholderElement) {
-            ReactDOM.render(<CodeEditor codeSnippet={{ type: snippet.type, code: snippet.code }} />, placeholderElement);
+            const root = createRoot(placeholderElement); // Create a root.
+            root.render(<CodeEditor codeSnippet={{ type: snippet.type, code: snippet.code }} />);
           }
         });
       }
     }
   }, [props]);
+  
   
 
   const postTitle = props?.post?.title;
