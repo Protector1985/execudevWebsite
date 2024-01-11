@@ -1,0 +1,10 @@
+# robots.txt
+
+User-agent: Googlebot
+Disallow:
+
+User-agent: Bingbot
+Disallow:
+
+# Sitemap 
+Sitemap: https://www.execudev-inc.com/sitemap.xml
