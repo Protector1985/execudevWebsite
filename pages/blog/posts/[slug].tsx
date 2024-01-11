@@ -6,7 +6,7 @@ import css from "./styles/styles.module.css";
 import readingTime from "reading-time";
 import moment from "moment";
 import useWidth from "@/hooks/useWidth";
-import { createRoot } from "react-dom/client";
+import { createRoot } from 'react-dom/client';
 import Footer from "@/components/Footer/Footer";
 import Head from "next/head";
 import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
@@ -19,86 +19,65 @@ const Post: React.FC<any> = (props: any) => {
     return { __html: htmlContent };
   }
 
+
   const contentRef = useRef<HTMLDivElement>(null); // Ref to the content div
 
   function extractAndReplaceCodeSnippets(htmlContent: string) {
-    const pythonCodeRegex =
-      /<div>\*\*\*python_code\*\*\*\{<\/div>([\s\S]*?)<div>\}\*\*\*python_code\*\*\*<\/div>/g;
-    const bashCodeRegex =
-      /<div>\*\*\*bash\*\*\*\{<\/div>([\s\S]*?)<div>\}\*\*\*bash\*\*\*<\/div>/g;
-
+    const pythonCodeRegex = /<div>\*\*\*python_code\*\*\*\{<\/div>([\s\S]*?)<div>\}\*\*\*python_code\*\*\*<\/div>/g;
+    const bashCodeRegex = /<div>\*\*\*bash\*\*\*\{<\/div>([\s\S]*?)<div>\}\*\*\*bash\*\*\*<\/div>/g;
+  
     let index = 0;
-    const snippets: any = [];
+    const snippets:any = [];
     let modifiedHtmlContent = htmlContent;
-
+  
     // Extract Python code snippets
-    modifiedHtmlContent = modifiedHtmlContent.replace(
-      pythonCodeRegex,
-      (_, codeSnippet) => {
-        return processCodeSnippet(
-          codeSnippet,
-          "python_code",
-          index++,
-          snippets,
-        );
-      },
-    );
-
+    modifiedHtmlContent = modifiedHtmlContent.replace(pythonCodeRegex, (_, codeSnippet) => {
+      return processCodeSnippet(codeSnippet, 'python_code', index++, snippets);
+    });
+  
     // Extract Bash code snippets
-    modifiedHtmlContent = modifiedHtmlContent.replace(
-      bashCodeRegex,
-      (_, codeSnippet) => {
-        return processCodeSnippet(codeSnippet, "bash", index++, snippets);
-      },
-    );
-
+    modifiedHtmlContent = modifiedHtmlContent.replace(bashCodeRegex, (_, codeSnippet) => {
+      return processCodeSnippet(codeSnippet, 'bash', index++, snippets);
+    });
+  
     return { modifiedHtmlContent, snippets };
   }
-
-  function processCodeSnippet(
-    codeSnippet: any,
-    type: any,
-    index: any,
-    snippets: any,
-  ) {
-    let cleanedCodeSnippet = codeSnippet.replace(/<\/?div>/g, "").trim();
-
-    const tempDiv = document.createElement("div");
+  
+  function processCodeSnippet(codeSnippet:any, type:any, index:any, snippets:any) {
+    let cleanedCodeSnippet = codeSnippet.replace(/<\/?div>/g, '').trim();
+    
+    const tempDiv = document.createElement('div');
     tempDiv.innerHTML = cleanedCodeSnippet;
     cleanedCodeSnippet = tempDiv.innerText;
-
+    
     const placeholder = `code-editor-placeholder-${index}`;
     snippets.push({ code: cleanedCodeSnippet, type, placeholder });
-
+    
     return `<div id="${placeholder}"></div>`; // Placeholder for the CodeEditor component
   }
+  
+
 
   useEffect(() => {
     if (props?.post?.content) {
       const s = readingTime(props?.post?.content);
       setStats(s);
-
-      const { modifiedHtmlContent, snippets } = extractAndReplaceCodeSnippets(
-        props.post.content,
-      );
+  
+      const { modifiedHtmlContent, snippets } = extractAndReplaceCodeSnippets(props.post.content);
       if (contentRef.current) {
         contentRef.current.innerHTML = modifiedHtmlContent;
-        snippets.forEach((snippet: any) => {
-          const placeholderElement = document.getElementById(
-            snippet.placeholder,
-          );
+        snippets.forEach((snippet:any) => {
+          const placeholderElement = document.getElementById(snippet.placeholder);
           if (placeholderElement) {
             const root = createRoot(placeholderElement); // Create a root.
-            root.render(
-              <CodeEditor
-                codeSnippet={{ type: snippet.type, code: snippet.code }}
-              />,
-            );
+            root.render(<CodeEditor codeSnippet={{ type: snippet.type, code: snippet.code }} />);
           }
         });
       }
     }
   }, [props]);
+  
+  
 
   const postTitle = props?.post?.title;
   const postDescription = props?.post?.seo?.metaDesc;
@@ -123,7 +102,7 @@ const Post: React.FC<any> = (props: any) => {
     },
     // Additional properties like "publisher" can be added here
   };
-
+  
   return (
     <>
       <Head>
@@ -134,9 +113,7 @@ const Post: React.FC<any> = (props: any) => {
         <meta property="og:image" content={postImageUrl} />
         <meta
           property="og:url"
-          content={`https://www.execudev-inc.com/blog/posts/${postTitle
-            ?.toLowerCase()
-            .replace(/\s+/g, "-")}`}
+          content={`https://www.execudev-inc.com/blog/posts/${postTitle?.toLowerCase().replace(/\s+/g, "-")}`}
         />
         <meta property="og:type" content="article" />
         <meta property="og:published_time" content={publicationDate} />
