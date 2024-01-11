@@ -20,6 +20,15 @@ export const GET_ONE_POST = gql`
       content
       title
       date
+      seo {
+        breadcrumbs {
+          url
+          text
+        }
+        metaDesc
+        opengraphPublishedTime
+        opengraphModifiedTime
+      }
       author {
         node {
           name
