@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import AceEditor from "react-ace";
+import CodeMirror from '@uiw/react-codemirror';
+import { langs } from '@uiw/codemirror-extensions-langs';
+import {tomorrowNightBlue} from '@uiw/codemirror-theme-tomorrow-night-blue'
+import css from './styles/styles.module.css'
 
-// Import the modes you need
-import "ace-builds/src-noconflict/mode-python"; // Import python mode
-import "ace-builds/src-noconflict/theme-dracula";
-import "ace-builds/src-noconflict/theme-twilight";
-import "ace-builds/src-noconflict/theme-solarized_dark";
-import "ace-builds/src-noconflict/theme-tomorrow_night";
-import "ace-builds/src-noconflict/theme-monokai";
-
-import "ace-builds/src-noconflict/ext-language_tools"; // Import language tools for autocomplete, snippets, etc.
 
 interface CodeEditorInterface {
     codeSnippet: {
@@ -19,33 +13,37 @@ interface CodeEditorInterface {
 }
 
 const CodeEditor: React.FC<CodeEditorInterface> = ({ codeSnippet }) => {
-    const [editorMode, setEditorMode] = useState<string>("text");
-
+    const [editorMode, setEditorMode] = useState<string>("text/plain");
+    console.log(langs.shell)
+    
     useEffect(() => {
-        if(codeSnippet.type === "python_code") {
-            setEditorMode("python");
+        if (codeSnippet.type === "python_code") {
+            setEditorMode("text/x-python");
+        } else if(codeSnippet.type ==="bash") {
+            setEditorMode("text/bash");
         }
         // Add other conditions for different code types if necessary
     }, [codeSnippet.type]);
 
-    return (
-        <AceEditor
-            mode={editorMode}
-            theme="dracula"
-            name="codeEditor"
-            readOnly={true}
-            value={codeSnippet.code}
-            editorProps={{ $blockScrolling: true }}
+
+    function returnEditor() {
+        if(editorMode === "text/x-python") {
+            return <CodeMirror theme={tomorrowNightBlue} readOnly={true} value={codeSnippet.code} height="auto" extensions={[ langs.python()]}  />
+        } else if (editorMode === "text/bash") {
+            return <CodeMirror theme={tomorrowNightBlue} readOnly={true} value={codeSnippet.code} height="auto" extensions={[langs.shell()]}  />
+        }
+    }
+  
+        return (
+            <div className={css.wrapper}>
+                {returnEditor()}
+            </div>
+        )
+        
             
-            setOptions={{
-                displayIndentGuides: false,
-                showLineNumbers: true,
-                tabSize: 4,
-                useWorker: false, // Disable syntax checking
-                showInvisibles: false // Disable whitespace visualization
-            }}
-        />
-    );
+        
+
 }
 
 export default CodeEditor;
+

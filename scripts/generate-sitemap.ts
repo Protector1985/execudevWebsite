@@ -7,9 +7,6 @@ import path from "path";
 // Defined URLs to be added directly to the sitemap
 const BASE_URLS = [
   "https://www.execudev-inc.com",
-  "https://execudev-inc.com",
-  "http://www.execudev-inc.com",
-  "http://execudev-inc.com",
 ];
 
 // Replace with your GraphQL endpoint
