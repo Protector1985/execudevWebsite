@@ -202,10 +202,12 @@ const Post: React.FC<any> = (props: any) => {
 
 export default Post;
 
+
+
 export async function getStaticProps({ params }: any) {
   const { slug } = params;
   console.log("Fetching post with slug:", slug);
-
+  console.log(params)
   try {
     const { data } = await apolloClient.query({
       query: GET_ONE_POST,
@@ -237,11 +239,13 @@ export async function getStaticPaths() {
     fetchPolicy: "no-cache",
   });
 
+
   const paths = data.data.posts.edges.map(({ node }: any) => {
     return {
-      params: { slug: node.slug },
+      params: {category: node?.categories?.nodes[0].name.replace(/\s+/g, '_').toLowerCase(), slug: node.slug },
     };
   });
+
 
   return {
     paths: paths,

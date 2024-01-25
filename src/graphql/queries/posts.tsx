@@ -7,11 +7,28 @@ export const GET_ALL_SLUGS = gql`
         node {
           id
           slug
+          categories {
+            nodes {
+              categoryId
+              description
+              name
+            }
+          }
         }
       }
     }
   }
 `;
+
+export const GET_ALL_CATEGORIES = gql`
+  query categories {
+    categories {
+      nodes {
+        name
+      }
+    }
+  }
+`
 
 export const GET_ONE_POST = gql`
   query post($slug: ID!) {
