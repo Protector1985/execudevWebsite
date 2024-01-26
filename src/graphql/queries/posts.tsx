@@ -76,6 +76,12 @@ export const GET_ONE_POST = gql`
       content
       title
       date
+      slug
+      categories {
+            nodes {
+              slug
+            }
+          }
       seo {
         breadcrumbs {
           url
