@@ -25,10 +25,49 @@ export const GET_ALL_CATEGORIES = gql`
     categories {
       nodes {
         name
+        slug
+        description
       }
     }
   }
-`
+`;
+
+export const GET_ALL_POSTS_PER_CATEGORY = gql`
+  query posts($category: String) {
+    posts(where: { categoryName: $category }) {
+      edges {
+        node {
+          id
+          title
+          excerpt
+          slug
+          date
+          categories {
+            nodes {
+              slug
+            }
+          }
+          featuredImage {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+          author {
+            node {
+              name
+              firstName
+              lastName
+              avatar {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
 export const GET_ONE_POST = gql`
   query post($slug: ID!) {

@@ -1,0 +1,90 @@
+.wrapper {
+  min-width: 380px;
+  width: 400px;
+  background-color: transparent;
+}
+
+.Link {
+  text-decoration: none;
+}
+
+.featureImage {
+  width: 99%;
+  height: 93%;
+  object-fit: cover;
+  z-index: 1;
+}
+.featureImageBlur {
+  width: 100%; /* Slightly larger than the focused image */
+  height: 97%; /* Slightly larger than the focused image */
+  object-fit: cover;
+  position: absolute;
+  filter: blur(10px); /* Apply blur */
+  z-index: -1;
+}
+
+.featureImageContainer {
+  width: 100%;
+  position: relative;
+}
+
+.featureImage:hover {
+  object-fit: contain;
+  width: 100%;
+  height: auto;
+  opacity: 0.3;
+  box-shadow: inset -10px -10px 10px 20px #101828 !important;
+}
+
+.title {
+  color: white;
+  margin-left: 1%;
+  font-size: 22px;
+  width: 95%;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.arrow {
+  color: white;
+  transform: rotate(45deg);
+  width: 35px;
+  height: 35px;
+  margin-top: 10px;
+  transition:
+    margin 500ms ease,
+    color 500ms ease,
+    transform 500ms ease;
+}
+
+.arrow:hover,
+.contentContainer:hover .arrow,
+.featureImage:hover ~ .contentContainer .arrow {
+  color: rgb(100, 202, 218);
+  margin-top: 0px;
+  margin-right: -10px;
+}
+
+@media (min-width: 500px) and (max-width: 768px) {
+  .title {
+    color: white;
+    margin-left: 5%;
+  }
+}
+
+@media (max-width: 500px) {
+  .wrapper {
+    min-width: 330px;
+    width: 330px;
+    background-color: transparent;
+  }
+
+  .title {
+    color: white;
+    margin-left: 5%;
+  }
+}

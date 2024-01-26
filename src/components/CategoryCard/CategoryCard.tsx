@@ -1,35 +1,32 @@
+"use client";
 import React from "react";
 import css from "./styles/styles.module.css";
 import { FaArrowUp } from "react-icons/fa6";
 import Link from "next/link";
 import Image from "next/image";
+import imageStringParser from "./utilities/imageStringParser";
 
-interface PostInterface {
+interface CategoryInterface {
   title: string;
-  excerpt: string;
   image: string;
-  postSlug: string;
-  categorySlug: string;
-  altText: string;
+  slug: string;
 }
 
-const PostPreview: React.FC<PostInterface> = ({
-  postSlug,
-  categorySlug,
-  title,
-  altText,
-  image,
-}) => {
+const CategoryCard: React.FC<CategoryInterface> = ({ slug, title, image }) => {
   return (
-    <Link className={css.Link} href={`/${categorySlug}/post/${postSlug}`}>
+    <Link className={css.Link} href={`/${slug}`}>
       <div className={css.wrapper}>
         <div className={css.featureImageContainer}>
           <img
-            alt={`${altText}-blurred`}
-            src={image}
+            alt={`${imageStringParser(image)?.altText}-blurred`}
+            src={imageStringParser(image)?.src}
             className={css.featureImageBlur}
           />
-          <img alt={`${altText}`} src={image} className={css.featureImage} />
+          <img
+            alt={`${imageStringParser(image)?.altText}`}
+            src={imageStringParser(image)?.src}
+            className={css.featureImage}
+          />
         </div>
 
         <div className={css.contentContainer}>
@@ -41,4 +38,4 @@ const PostPreview: React.FC<PostInterface> = ({
   );
 };
 
-export default PostPreview;
+export default CategoryCard;

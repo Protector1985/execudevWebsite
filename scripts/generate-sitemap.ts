@@ -9,7 +9,8 @@ import moment from "moment";
 const BASE_URL = "https://www.execudev-inc.com";
 
 // Replace with your GraphQL endpoint
-const GRAPHQL_ENDPOINT = "https://execudev-83aeea.ingress-haven.ewp.live/graphql";
+const GRAPHQL_ENDPOINT =
+  "https://execudev-83aeea.ingress-haven.ewp.live/graphql";
 
 // GraphQL query to get all slugs and their last modification dates
 const GET_ALL_SLUGS = gql`
@@ -48,9 +49,9 @@ const apolloClient = new ApolloClient({
 async function fetchSlugs() {
   try {
     const { data } = await apolloClient.query({ query: GET_ALL_SLUGS });
-    return data.posts.edges.map(({ node }:any) => ({
+    return data.posts.edges.map(({ node }: any) => ({
       slug: node.slug,
-      lastmod: node.seo.opengraphModifiedTime
+      lastmod: node.seo.opengraphModifiedTime,
     }));
   } catch (error) {
     console.error("Error fetching slugs:", error);
@@ -58,22 +59,24 @@ async function fetchSlugs() {
   }
 }
 
-async function generateSitemap(slugs:any) {
+async function generateSitemap(slugs: any) {
   let latestDate = "";
   const sitemapUrls = [];
 
-  slugs.forEach(({ slug, lastmod }:any) => {
+  slugs.forEach(({ slug, lastmod }: any) => {
     const formattedDate = moment(lastmod).format("YYYY-MM-DD");
     if (!latestDate || moment(formattedDate).isAfter(moment(latestDate))) {
       latestDate = formattedDate;
     }
     sitemapUrls.push(
-      `  <url>\n    <loc>${BASE_URL}/blog/posts/${slug}</loc>\n    <lastmod>${formattedDate}</lastmod>\n  </url>`,
+      `  <url>\n    <loc>${BASE_URL}/posts/${slug}</loc>\n    <lastmod>${formattedDate}</lastmod>\n  </url>`,
     );
   });
 
   // Add the base URL with the latest modification date
-  sitemapUrls.unshift(`  <url>\n    <loc>${BASE_URL}</loc>\n    <lastmod>${latestDate}</lastmod>\n  </url>`);
+  sitemapUrls.unshift(
+    `  <url>\n    <loc>${BASE_URL}</loc>\n    <lastmod>${latestDate}</lastmod>\n  </url>`,
+  );
 
   const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
