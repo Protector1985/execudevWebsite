@@ -93,6 +93,7 @@ const Home: React.FC<HomeProps> = ({ categories }) => {
     } else {
       return (
         <CategoryCard
+          key={category.slug}
           slug={category.slug}
           title={category.name}
           image={category.description}
@@ -129,6 +130,7 @@ const Home: React.FC<HomeProps> = ({ categories }) => {
                   } else {
                     return (
                       <CategoryCard
+                        key={category.slug}
                         slug={category.slug}
                         title={category.name}
                         image={category.description}
