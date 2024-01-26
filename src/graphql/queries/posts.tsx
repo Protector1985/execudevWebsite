@@ -7,6 +7,62 @@ export const GET_ALL_SLUGS = gql`
         node {
           id
           slug
+          categories {
+            nodes {
+              categoryId
+              description
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_ALL_CATEGORIES = gql`
+  query categories {
+    categories {
+      nodes {
+        name
+        slug
+        description
+      }
+    }
+  }
+`;
+
+export const GET_ALL_POSTS_PER_CATEGORY = gql`
+  query posts($category: String) {
+    posts(where: { categoryName: $category }) {
+      edges {
+        node {
+          id
+          title
+          excerpt
+          slug
+          date
+          categories {
+            nodes {
+              slug
+            }
+          }
+          featuredImage {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+          author {
+            node {
+              name
+              firstName
+              lastName
+              avatar {
+                url
+              }
+            }
+          }
         }
       }
     }

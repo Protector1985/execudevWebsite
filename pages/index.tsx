@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import css from "./styles/index.module.css";
 import apolloClient from "@/graphql/lib/client";
-import { GET_FIRST_10_POSTS } from "@/graphql/queries/posts";
+import {
+  GET_ALL_CATEGORIES,
+  GET_FIRST_10_POSTS,
+} from "@/graphql/queries/posts";
 import NavBar from "@/components/Nav/NavBar";
 import PostPreview from "@/components/PostPreview/PostPreview";
 import useWidth from "@/hooks/useWidth";
 import Footer from "@/components/Footer/Footer";
 import Head from "next/head";
+import CategoryCard from "@/components/CategoryCard/CategoryCard";
 
 interface FeaturedImage {
   node: {
@@ -15,35 +19,42 @@ interface FeaturedImage {
   };
 }
 
-interface PostNode {
-  slug: string;
-  featuredImage: FeaturedImage;
-  title: string;
-  excerpt: string;
-}
+// interface PostNode {
+//   slug: string;
+//   featuredImage: FeaturedImage;
+//   title: string;
+//   excerpt: string;
+// }
 
-interface Post {
-  __typename: string;
-  node: PostNode;
-}
+// interface Post {
+//   __typename: string;
+//   node: PostNode;
+// }
 
 interface HomeProps {
-  posts: Array<Post>;
+  categories: {
+    nodes: Array<any>;
+  };
 }
 
-const Home: React.FC<HomeProps> = ({ posts }) => {
+const Home: React.FC<HomeProps> = ({ categories }) => {
   const width = useWidth();
-
-  const [groupedPosts, setGroupedPosts] = useState<Array<Array<Post>>>([]);
+  const { nodes } = categories;
+  const [groupedCategories, setGroupedCategories] = useState<Array<Array<any>>>(
+    [],
+  );
 
   const breakpoints = {
     sm: 923,
     large: 1400,
     xl: 1401,
   };
-
+  
   useEffect(() => {
-    const groupPosts = () => {
+    const groupCategories = () => {
+      const filteredCategories = nodes.filter(
+        (item) => item !== "Uncategorized",
+      );
       let groupSize: number;
       if (width !== null) {
         if (width < breakpoints.sm) {
@@ -54,33 +65,42 @@ const Home: React.FC<HomeProps> = ({ posts }) => {
           groupSize = 3; // xl
         }
 
-        const tempGroupedPosts: Array<Array<Post>> = [];
-        for (let i = 0; i < posts.length; i += groupSize) {
-          tempGroupedPosts.push(posts.slice(i, i + groupSize));
+        const tempGroupedCategories: Array<Array<any>> = [];
+        for (let i = 0; i < filteredCategories.length; i += groupSize) {
+          tempGroupedCategories.push(
+            filteredCategories.slice(i, i + groupSize),
+          );
         }
 
-        setGroupedPosts(tempGroupedPosts);
+        setGroupedCategories(tempGroupedCategories);
       }
     };
 
-    groupPosts();
-  }, [posts, width]);
+    groupCategories();
+  }, [nodes, width]);
 
   const pageTitle = "ExecuDev | Next Level Programming";
-  const pageDescription = "Explore cutting-edge AI centered programming tutorials, industry insights, and development tips.";
-  const pageImage = "https://execudev-83aeea.ingress-haven.ewp.live/wp-content/uploads/2024/01/DALL·E-2024-01-07-16.29.36-A-16_9-Matrix-styled-image-of-a-CPU-with-the-initials-ED-clearly-visible-on-it.-The-CPU-is-intricately-designed-displaying-detailed-circuitry-and-c.png";
+  const pageDescription =
+    "Explore cutting-edge AI centered programming tutorials, industry insights, and development tips.";
+  const pageImage =
+    "https://execudev-83aeea.ingress-haven.ewp.live/wp-content/uploads/2024/01/DALL·E-2024-01-07-16.29.36-A-16_9-Matrix-styled-image-of-a-CPU-with-the-initials-ED-clearly-visible-on-it.-The-CPU-is-intricately-designed-displaying-detailed-circuitry-and-c.png";
   const pageUrl = "https://www.execudev-inc.com";
 
-  const serverRenderedPosts = posts.map((post) => (
-    <PostPreview
-      key={post.node.slug}
-      slug={post.node.slug}
-      altText={post.node.featuredImage.node.altText}
-      image={post.node.featuredImage.node.sourceUrl}
-      title={post.node.title}
-      excerpt={post.node.excerpt}
-    />
-  ));
+  //for seo otherwise no display due to js above
+  const serverRenderedCategories = nodes.map((category) => {
+    if (category.name === "Uncategorized") {
+      return null;
+    } else {
+      return (
+        <CategoryCard
+          key={category.slug}
+          slug={category.slug}
+          title={category.name}
+          image={category.description}
+        />
+      );
+    }
+  });
 
   return (
     <>
@@ -101,19 +121,23 @@ const Home: React.FC<HomeProps> = ({ posts }) => {
         <div className={css.subWrapper}>
           {/* <NavBar /> */}
           <div className={css.posts}>
-            {groupedPosts.length === 0 ? serverRenderedPosts : null}
-            {groupedPosts.map((row, rowIndex) => (
+            {groupedCategories.length === 0 ? serverRenderedCategories : null}
+            {groupedCategories.map((row, rowIndex) => (
               <div key={`Row ${rowIndex}`} className={css.postWrapper}>
-                {row.map((post) => (
-                  <PostPreview
-                    key={post.node.slug}
-                    slug={post.node.slug}
-                    altText={post.node.featuredImage.node.altText}
-                    image={post.node.featuredImage.node.sourceUrl}
-                    title={post.node.title}
-                    excerpt={post.node.excerpt}
-                  />
-                ))}
+                {row.map((category) => {
+                  if (category.name === "Uncategorized") {
+                    return null;
+                  } else {
+                    return (
+                      <CategoryCard
+                        key={category.slug}
+                        slug={category.slug}
+                        title={category.name}
+                        image={category.description}
+                      />
+                    );
+                  }
+                })}
               </div>
             ))}
           </div>
@@ -125,14 +149,38 @@ const Home: React.FC<HomeProps> = ({ posts }) => {
 };
 
 export async function getServerSideProps() {
-  const data = await apolloClient.query({
-    query: GET_FIRST_10_POSTS,
-    fetchPolicy: "no-cache",
-  });
+  try {
+    const { data } = await apolloClient.query({
+      query: GET_ALL_CATEGORIES,
+      fetchPolicy: "no-cache",
+    });
 
-  return {
-    props: { posts: data?.data?.posts?.edges },
-  };
-};
+    // If data is fetched successfully, return it as props
+    return {
+      props: {
+        ...data, // Make sure you are accessing the correct property from 'data'
+      },
+    };
+  } catch (err) {
+    console.error("Error fetching post:", err);
+
+    // Handle error appropriately, maybe return notFound or an error prop
+    return {
+      props: {},
+      notFound: true, // If there's an error, you might want to show a 404 page
+    };
+  }
+}
+
+// export async function getServerSideProps() {
+//   const data = await apolloClient.query({
+//     query: GET_FIRST_10_POSTS,
+//     fetchPolicy: "no-cache",
+//   });
+
+//   return {
+//     props: { posts: data?.data?.posts?.edges },
+//   };
+// };
 
 export default Home;
