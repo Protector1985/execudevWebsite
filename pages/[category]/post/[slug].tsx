@@ -122,7 +122,7 @@ const Post: React.FC<any> = (props: any) => {
     },
     // Additional properties like "publisher" can be added here
   };
-
+  
   return (
     <>
       <Head>
@@ -211,7 +211,7 @@ const Post: React.FC<any> = (props: any) => {
           <div
             ref={contentRef}
             className={css.content}
-            dangerouslySetInnerHTML={{ __html: props?.post.content }}
+            dangerouslySetInnerHTML={{ __html: props?.seoContent }}
           />
 
           <Footer />
@@ -234,13 +234,14 @@ export async function getServerSideProps(context: any) {
     });
 
     //below is the sanitized content for SEO
-    // const processedContent = processContent(data.post.content);
+    const processedContent = processContent(data.post.content);
 
     //The content is served twice. with markup for code snippets and without.
     //useRef is used on the client side to swap the relevant code snippets.
     return {
       props: {
         post: data.post,
+        seoContent: processedContent
       },
     };
   } catch (err) {
