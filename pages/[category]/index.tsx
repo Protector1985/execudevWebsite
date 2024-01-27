@@ -35,7 +35,7 @@ const CategoryPosts: React.FC<HomeProps> = ({ posts }) => {
   };
 
   const [leftEdgeDistance, setLeftEdgeDistance] = useState<number>(0);
-  
+
   useEffect(() => {
     const measureLeftEdge = () => {
       const element =
