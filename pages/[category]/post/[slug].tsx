@@ -15,7 +15,7 @@ import processContent from "./utils/processCodeSnippet";
 
 const Post: React.FC<any> = (props: any) => {
   const [stats, setStats] = useState({ minutes: 0 });
-
+  const [clientContent, setClientcontent] = useState<any>(null)
   const width = useWidth();
   
   const contentRef = useRef<HTMLDivElement>(null); // Ref to the content div
@@ -74,6 +74,7 @@ const Post: React.FC<any> = (props: any) => {
 
   useEffect(() => {
     if (props?.post?.content) {
+      
       const s = readingTime(props?.post?.content);
       setStats(s);
 
@@ -209,11 +210,18 @@ const Post: React.FC<any> = (props: any) => {
           </div>
 
           
-            <div
+
+              <div
               ref={contentRef}
               className={css.content}
-              dangerouslySetInnerHTML={{ __html: props?.seoContent }}
-            />
+              dangerouslySetInnerHTML={{ __html: props?.post.content }}
+              />
+              
+           
+
+        
+          
+            
           
           <Footer />
         </div>
@@ -235,14 +243,13 @@ export async function getServerSideProps(context:any) {
     });
 
     //below is the sanitized content for SEO
-    const processedContent = processContent(data.post.content);
+    // const processedContent = processContent(data.post.content);
 
     //The content is served twice. with markup for code snippets and without. 
     //useRef is used on the client side to swap the relevant code snippets.
     return {
       props: {
         post: data.post,
-        seoContent: processedContent
       },
     };
   } catch (err) {
