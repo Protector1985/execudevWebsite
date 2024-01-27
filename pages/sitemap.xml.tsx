@@ -37,24 +37,19 @@ function generateSiteMap(subDomains: string[], categories:string[]) {
 
 export async function getServerSideProps({ res }: any) {
   
-
     const { data } = await apolloClient.query({
       query: GET_ALL_POSTS_PER_CATEGORY,
       fetchPolicy: "no-cache",
     });
 
    
-    const dta= await apolloClient.query({
+    const dta = await apolloClient.query({
       query: GET_ALL_CATEGORIES,
       fetchPolicy: "no-cache",
     })
     
     const categories = dta.data.categories.nodes.filter((item:any) => item.name !== "Uncategorized")
     
-    
-
-  
-
   const sitemap = generateSiteMap(data.posts.edges, categories);
   
   res.setHeader("Content-Type", "text/xml");
