@@ -1,5 +1,12 @@
 function processContent(content:string) {
     // Regex patterns for code snippets
+
+
+    if (typeof content !== 'string') {
+        console.error('Code snippet is not a string:', content);
+        return null; 
+      }
+
     const pythonCodeRegex = /<div>\*\*\*python_code\*\*\*\{<\/div>([\s\S]*?)<div>\}\*\*\*python_code\*\*\*<\/div>/g;
     const bashCodeRegex = /<div>\*\*\*bash\*\*\*\{<\/div>([\s\S]*?)<div>\}\*\*\*bash\*\*\*<\/div>/g;
   
