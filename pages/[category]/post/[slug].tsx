@@ -123,8 +123,6 @@ const Post: React.FC<any> = (props: any) => {
     // Additional properties like "publisher" can be added here
   };
 
-  console.log(props)
-
   return (
     <>
       <Head>
