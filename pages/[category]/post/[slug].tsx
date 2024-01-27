@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import apolloClient from "@/graphql/lib/client";
-import { GET_ALL_SLUGS, GET_ONE_POST } from "@/graphql/queries/posts";
+import { GET_ONE_POST } from "@/graphql/queries/posts";
 import NavBar from "@/components/Nav/NavBar";
 import css from "./styles/styles.module.css";
 import readingTime from "reading-time";
@@ -11,14 +11,13 @@ import Footer from "@/components/Footer/Footer";
 import Head from "next/head";
 import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 import CodeEditor from "@/components/CodeEditor/CodeEditor";
+import processContent from "./utils/processCodeSnippet";
 
 const Post: React.FC<any> = (props: any) => {
   const [stats, setStats] = useState({ minutes: 0 });
-  const width = useWidth();
-  function createMarkup(htmlContent: string) {
-    return { __html: htmlContent };
-  }
 
+  const width = useWidth();
+  
   const contentRef = useRef<HTMLDivElement>(null); // Ref to the content div
 
   function extractAndReplaceCodeSnippets(htmlContent: string) {
@@ -124,6 +123,8 @@ const Post: React.FC<any> = (props: any) => {
     // Additional properties like "publisher" can be added here
   };
 
+  console.log(props)
+
   return (
     <>
       <Head>
@@ -209,11 +210,13 @@ const Post: React.FC<any> = (props: any) => {
             </div>
           </div>
 
-          <div
-            ref={contentRef}
-            className={css.content}
-            dangerouslySetInnerHTML={createMarkup(props?.post?.content)}
-          />
+          
+            <div
+              ref={contentRef}
+              className={css.content}
+              dangerouslySetInnerHTML={{ __html: props?.seoContent }}
+            />
+          
           <Footer />
         </div>
       </div>
@@ -223,9 +226,8 @@ const Post: React.FC<any> = (props: any) => {
 
 export default Post;
 
-export async function getStaticProps({ params }: any) {
-  const { slug } = params;
-  console.log("Fetching post with slug:", slug);
+export async function getServerSideProps(context:any) {
+  const { slug } = context.params;
   
   try {
     const { data } = await apolloClient.query({
@@ -234,43 +236,22 @@ export async function getStaticProps({ params }: any) {
       fetchPolicy: "no-cache",
     });
 
-    // If data is fetched successfully, return it as props
+    //below is the sanitized content for SEO
+    const processedContent = processContent(data.post.content);
+
+    //The content is served twice. with markup for code snippets and without. 
+    //useRef is used on the client side to swap the relevant code snippets.
     return {
       props: {
-        post: data.post, // Make sure you are accessing the correct property from 'data'
+        post: data.post,
+        seoContent: processedContent
       },
-      revalidate: 10,
     };
   } catch (err) {
     console.error("Error fetching post:", err);
-
-    // Handle error appropriately, maybe return notFound or an error prop
     return {
-      props: {},
-      notFound: true, // If there's an error, you might want to show a 404 page
+      notFound: true,
     };
   }
 }
 
-export async function getStaticPaths() {
-  const data = await apolloClient.query({
-    query: GET_ALL_SLUGS,
-    fetchPolicy: "no-cache",
-  });
-
-  const paths = data.data.posts.edges.map(({ node }: any) => {
-    return {
-      params: {
-        category: node?.categories?.nodes[0].name
-          .replace(/\s+/g, "_")
-          .toLowerCase(),
-        slug: node.slug,
-      },
-    };
-  });
-
-  return {
-    paths: paths,
-    fallback: true,
-  };
-}
