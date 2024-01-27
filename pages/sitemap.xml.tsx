@@ -8,52 +8,55 @@ export default function Sitemap() {
   return null;
 }
 
-function generateSiteMap(subDomains: string[]) {
+function generateSiteMap(subDomains: string[], categories:string[]) {
   return `<?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
       <loc>https://execudev-inc.com</loc>
     </url>
+    ${categories
+      .map((item: any) => {
+        return `
+        <url>
+            <loc>${`https://execudev-inc.com/${item.slug}`}</loc>
+        </url>
+    `;
+      }).join("").trim()}
+
+
     ${subDomains
       .map((item: any) => {
         return `
-    <url>
-        <loc>${`https://execudev-inc.com${item}`}</loc>
-    </url>
+        <url>
+            <loc>${`https://execudev-inc.com/${item.node.categories.nodes[0].slug}/post/${item.node.slug}`}</loc>
+        </url>
     `;
-      })
-      .join("")
-      .trim()}
+      }).join("").trim()}
   </urlset>`;
 }
 
 export async function getServerSideProps({ res }: any) {
-  const { data } = await apolloClient.query({
-    query: GET_ALL_CATEGORIES,
-    fetchPolicy: "no-cache",
-  });
-
-  const doms = data.categories.nodes.map(async (item: any) => {
-    const allDomains: any[] = [];
-    item.name !== "Uncategorized" ?? allDomains.push(`/${item.slug}`);
+  
 
     const { data } = await apolloClient.query({
       query: GET_ALL_POSTS_PER_CATEGORY,
-      variables: { category: item.name },
       fetchPolicy: "no-cache",
     });
-    const subDomains = data.posts.edges.map((subItem: any) => {
-      const subDomain = `/${item.slug}/${subItem.node.slug}`;
-      return subDomain;
-    });
-    subDomains.forEach((domain: any) => allDomains.push(domain));
 
-    return allDomains;
-  });
+   
+    const dta= await apolloClient.query({
+      query: GET_ALL_CATEGORIES,
+      fetchPolicy: "no-cache",
+    })
+    
+    const categories = dta.data.categories.nodes.filter((item:any) => item.name !== "Uncategorized")
+    
+    
 
-  const preparedDomains = await Promise.all(doms);
+  
 
-  const sitemap = generateSiteMap(preparedDomains.flat());
+  const sitemap = generateSiteMap(data.posts.edges, categories);
+  
   res.setHeader("Content-Type", "text/xml");
   res.write(sitemap);
   res.end();

@@ -152,7 +152,7 @@ export async function getServerSideProps() {
   try {
     const { data } = await apolloClient.query({
       query: GET_ALL_CATEGORIES,
-      fetchPolicy: "no-cache",
+      fetchPolicy: 'no-cache',
     });
 
     // If data is fetched successfully, return it as props
@@ -172,15 +172,5 @@ export async function getServerSideProps() {
   }
 }
 
-// export async function getServerSideProps() {
-//   const data = await apolloClient.query({
-//     query: GET_FIRST_10_POSTS,
-//     fetchPolicy: "no-cache",
-//   });
-
-//   return {
-//     props: { posts: data?.data?.posts?.edges },
-//   };
-// };
 
 export default Home;
