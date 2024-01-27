@@ -2,8 +2,8 @@
 
 html {
   background-image: linear-gradient(
-      rgba(0, 13, 33, 0.97),
-      rgba(0, 13, 33, 0.97)
+      rgba(0, 13, 33, 0.96),
+      rgba(0, 13, 33, 0.96)
     ),
     url("/noise.gif") !important;
   background-position:
