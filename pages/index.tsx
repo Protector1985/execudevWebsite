@@ -49,7 +49,7 @@ const Home: React.FC<HomeProps> = ({ categories }) => {
     large: 1400,
     xl: 1401,
   };
-  
+
   useEffect(() => {
     const groupCategories = () => {
       const filteredCategories = nodes.filter(

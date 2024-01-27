@@ -78,10 +78,10 @@ export const GET_ONE_POST = gql`
       date
       slug
       categories {
-            nodes {
-              slug
-            }
-          }
+        nodes {
+          slug
+        }
+      }
       seo {
         breadcrumbs {
           url
